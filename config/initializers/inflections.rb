@@ -15,3 +15,5 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+Rails.application.config.assets.precompile += %w(bootstrap.min.js popper.js)
