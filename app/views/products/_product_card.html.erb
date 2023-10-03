@@ -4,7 +4,7 @@
       <div class="card h-100">
         <!-- Product image-->
         <!-- 製品画像が登録されていない場合は no_image 画像を表示 -->
-        <% if product.image.present? %>
+        <% if product.image.attached? %>
           <%= image_tag product.image.variant(resize:'450', gravity: :center, crop:'450x300+0+0').processed, class: "card-img-top" %>
         <% else %>
           <%= image_tag 'no_image-450x300.jpg' %>

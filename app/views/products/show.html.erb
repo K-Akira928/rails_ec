@@ -8,7 +8,7 @@
       <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
           <div class="col-md-6">
-            <% if @product.image.present? %>
+            <% if @product.image.attached? %>
               <%= image_tag @product.image, class: "card-img-top mb-5 mb-md-0" %>
             <% else %>
               <%= image_tag 'no_image-600x700.jpg' %>
