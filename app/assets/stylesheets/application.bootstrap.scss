@@ -1,2 +1,11 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+a {
+  color: #212529;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+}
