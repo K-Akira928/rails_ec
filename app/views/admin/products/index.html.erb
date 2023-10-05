@@ -1,0 +1,62 @@
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Akira Mart</h1>
+      <p class="lead fw-normal text-white-50 mb-0">商品管理画面</p>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <table class="my-5 table table-hover">
+    <thead class="sticky-top bg-white">
+      <tr>
+        <th scope="col">商品ID</th>
+        <th scope="col">商品名</th>
+        <th scope="col">商品価格</th>
+        <th scope="col">作成日</th>
+        <th scope="col">更新日</th>
+        <th class="px-4" scope="col">画像</th>
+        <th class="px-3" scope="col">操作</th>
+        <th scope="col"><%= link_to '商品作成', root_path, class: 'btn btn-primary' %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <th class="align-middle"><%= product.id %></td>
+          <td class="align-middle"><%= product.name %></td>
+          <td class="align-middle"><%= "#{product.price}円" %></td>
+          <td class="align-middle"><%= product.created_at %></td>
+          <td class="align-middle"><%= product.updated_at %></td>
+          <td class="align-middle">
+            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#productImageModal-<%= product.id %>">
+              <% if product.image.attached? %>
+                <%= image_tag product.image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
+              <% else %>
+                <%= image_tag 'no_image-75x50.jpg' %>
+              <% end %>
+            </button>
+          </td>
+          <td class="align-middle" colspan="2">
+            <%= link_to '編集', edit_admin_product_path(product.id), class: 'm-2 btn btn-primary' %>
+            <%= link_to '削除', root_path, class: 'm-2 btn btn-danger' %>
+          </td>
+        </tr>
+        <!-- モーダル設定 -->
+        <div class="modal fade" id="productImageModal-<%= product.id %>" tabindex="-1" aria-labelledby="productImageModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-body text-center">
+                <% if product.image.attached? %>
+                  <%= image_tag product.image.variant(resize:'765', gravity: :center, crop:'765x510+0+0') %>
+                <% else %>
+                  <%= image_tag 'no_image-450x300', size: "765x510" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </tbody>
+  </table>
+</div>
