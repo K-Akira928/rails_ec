@@ -21,6 +21,12 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, notice: "商品ID:#{product.id} #{product.name} の編集を完了しました"
   end
 
+  def destroy
+    product = Product.find(params[:id])
+    product.destroy
+    redirect_to admin_products_path, notice: "商品ID#{product.id} #{product.name} を削除しました"
+  end
+
   private
 
   def product_params

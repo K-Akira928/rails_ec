@@ -42,10 +42,10 @@
           </td>
           <td class="align-middle" colspan="2">
             <%= link_to '編集', edit_admin_product_path(product.id), class: 'm-2 btn btn-primary' %>
-            <%= link_to '削除', root_path, class: 'm-2 btn btn-danger' %>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticDeleteBackdrop-<%= product.id %>">削除</button>
           </td>
         </tr>
-        <!-- モーダル設定 -->
+        <!-- 画像モーダル -->
         <div class="modal fade" id="productImageModal-<%= product.id %>" tabindex="-1" aria-labelledby="productImageModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -55,6 +55,24 @@
                 <% else %>
                   <%= image_tag 'no_image-450x300.jpg', size: "765x510" %>
                 <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 削除確認モーダル -->
+        <div class="modal fade" id="staticDeleteBackdrop-<%= product.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">削除の確認</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <%= "商品ID:#{product.id} #{product.name}を削除しますか？" %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= link_to '削除', admin_product_path(product.id), data: { turbo_method: :delete }, class: 'm-2 btn btn-danger' %>
               </div>
             </div>
           </div>
