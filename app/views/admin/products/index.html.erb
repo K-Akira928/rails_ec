@@ -53,7 +53,7 @@
                 <% if product.image.attached? %>
                   <%= image_tag product.image.variant(resize:'765', gravity: :center, crop:'765x510+0+0') %>
                 <% else %>
-                  <%= image_tag 'no_image-450x300', size: "765x510" %>
+                  <%= image_tag 'no_image-450x300.jpg', size: "765x510" %>
                 <% end %>
               </div>
             </div>
