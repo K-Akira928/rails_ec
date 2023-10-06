@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'sessions/new'
   namespace :admin do
     resources :products, except: %i[show]
   end
