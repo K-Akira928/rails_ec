@@ -4,11 +4,18 @@ class Admin::ProductsController < ApplicationController
   end
 
   def new
+    @product = Product.new
   end
 
   def create
-    product = Product.create(product_params)
-    redirect_to admin_products_path, notice: "商品ID:#{product.id} #{product.name} の作成を完了しました"
+    @product = Product.new(product_params)
+
+    if @product.save
+      redirect_to admin_products_path, notice: "商品ID:#{@product.id} #{@product.name} の作成を完了しました"
+    else
+      flash.now[:alert] = @product.errors.full_messages
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -17,8 +24,12 @@ class Admin::ProductsController < ApplicationController
 
   def update
     product = Product.find(params[:id])
-    product.update(product_params)
-    redirect_to admin_products_path, notice: "商品ID:#{product.id} #{product.name} の編集を完了しました"
+
+    if product.update(product_params)
+      redirect_to admin_products_path, notice: "商品ID:#{product.id} #{product.name} の編集を完了しました"
+    else
+      render :edit
+    end
   end
 
   def destroy

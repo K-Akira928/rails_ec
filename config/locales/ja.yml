@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    attributes:
+      product:
+        name: 商品名
+        price: 値段
+        description: 商品説明
+  errors:
+    messages:
+      blank: を入力してください
+      not_a_number: を数字で入力してください
