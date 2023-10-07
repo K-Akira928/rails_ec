@@ -7,6 +7,9 @@
   </div>
 </header>
 <div class="container my-5">
+  <div class="d-md-flex justify-content-md-end">
+    <%= link_to '一覧', admin_products_path, class: "btn btn-outline-dark" %>
+  </div>
 <!-- エラーメッセージ -->
   <% if flash[:alert].present? %>
     <div class="mt-4 alert alert-warning text-center">
