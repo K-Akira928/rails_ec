@@ -29,8 +29,8 @@
           <th class="align-middle"><%= product.id %></td>
           <td class="align-middle"><%= product.name %></td>
           <td class="align-middle"><%= "#{product.price}円" %></td>
-          <td class="align-middle"><%= product.created_at %></td>
-          <td class="align-middle"><%= product.updated_at %></td>
+          <td class="align-middle"><%= product.created_at.to_formatted_s(:datetime_jp) %></td>
+          <td class="align-middle"><%= product.updated_at.to_formatted_s(:datetime_jp) %></td>
           <td class="align-middle">
             <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#productImageModal-<%= product.id %>">
               <% if product.image.attached? %>
