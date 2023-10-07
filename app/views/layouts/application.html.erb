@@ -32,6 +32,7 @@
             </li>
           </ul>
           <form class="d-flex">
+            <%= link_to 'ログアウト', logout_path, data: { turbo_method: :delete }, class: "me-4 btn btn-outline-dark" if current_user.present? %>
             <button class="btn btn-outline-dark" type="submit">
               <i class="bi-cart-fill me-1"></i>
               カート

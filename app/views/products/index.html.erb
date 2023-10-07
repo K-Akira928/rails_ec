@@ -15,6 +15,9 @@
     <!-- Section-->
     <section class="py-5">
       <div class="container px-4 px-lg-5 mt-5">
+        <% if flash[:notice].present? %>
+          <p class="mt-4 alert alert-success text-center"><%= flash[:notice] %></p>
+        <% end %>
         <%= render partial: 'product_card', locals: { products: @products } %>
       </div>
     </section>

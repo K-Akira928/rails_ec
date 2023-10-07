@@ -15,6 +15,11 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    session.delete(:user_id)
+    redirect_to root_path, notice: 'ログアウトしました'
+  end
+
   private
 
   def session_params
