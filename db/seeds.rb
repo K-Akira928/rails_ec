@@ -25,10 +25,3 @@ Product.create!(
   price: 6000,
   description: '画像なしテスト商品1の説明です'
 )
-
-# adminユーザーを作成
-User.create!(
-  name: 'admin',
-  password: 'pw',
-  password_confirmation: 'pw'
-)
