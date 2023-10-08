@@ -2,7 +2,7 @@ class Admin::ProductsController < ApplicationController
   before_action :set_product, only: %i[edit update destroy]
 
   def index
-    @products = Product.all
+    @products = Product.all.order(updated_at: :DESC)
   end
 
   def new
