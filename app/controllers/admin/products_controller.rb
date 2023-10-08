@@ -1,4 +1,6 @@
 class Admin::ProductsController < ApplicationController
+  before_action :set_product, only: %i[edit update destroy]
+
   def index
     @products = Product.all
   end
@@ -11,7 +13,7 @@ class Admin::ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to admin_products_path, notice: "商品ID:#{@product.id} #{@product.name} の作成を完了しました"
+      redirect_and_flash_message('作成')
     else
       flash.now[:alert] = @product.errors.full_messages
       render :new, status: :unprocessable_entity
@@ -19,28 +21,33 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
   end
 
   def update
-    product = Product.find(params[:id])
-
-    if product.update(product_params)
-      redirect_to admin_products_path, notice: "商品ID:#{product.id} #{product.name} の編集を完了しました"
+    if @product.update(product_params)
+      redirect_and_flash_message('編集')
     else
-      render :edit
+      flash.now[:alert] = @product.errors.full_messages
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    product = Product.find(params[:id])
-    product.destroy
-    redirect_to admin_products_path, notice: "商品ID#{product.id} #{product.name} を削除しました"
+    @product.destroy
+    redirect_and_flash_message('削除')
   end
 
   private
 
   def product_params
     params.require(:product).permit(:name, :price, :description, :image)
+  end
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  def redirect_and_flash_message(order)
+    redirect_to admin_products_path, notice: "商品#{@product.id} #{@product.name} を#{order}しました"
   end
 end
