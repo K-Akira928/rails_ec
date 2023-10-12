@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get '/carts', to: 'carts#index'
+  resources :carts, only: %i[index update]
 
   namespace :admin do
     resources :products, except: %i[show]
