@@ -34,7 +34,7 @@
           <%= link_to cart_items_path, class: 'btn btn-outline-dark' do %>
             <i class="bi-cart-fill me-1"></i>
             <span>カート</span>
-            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+            <span class="badge bg-dark text-white ms-1 rounded-pill"><%= @product_in_carts.length %></span>
           <% end %>
         </div>
       </div>
