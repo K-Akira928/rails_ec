@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :carts, only: %i[index update]
+  resources :carts, only: %i[index update destroy]
 
   namespace :admin do
     resources :products, except: %i[show]
