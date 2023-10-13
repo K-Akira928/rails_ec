@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :carts, only: %i[index update destroy]
+  namespace :cart do
+    get '/items', to: 'sessions#index'
+    put '/:id', to: 'sessions#update'
+    delete '/:id', to: 'sessions#destroy'
+  end
 
   namespace :admin do
     resources :products, except: %i[show]

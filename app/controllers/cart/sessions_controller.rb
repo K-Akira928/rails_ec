@@ -1,4 +1,4 @@
-class CartsController < ApplicationController
+class Cart::SessionsController < ApplicationController
   def index
     @product_in_carts = session[:product_in_cart_id].map do |prodcut_id|
       Product.find_by(id: prodcut_id)

@@ -23,7 +23,7 @@
                 <small class="text-body-secondary"><%= product_in_cart.description.slice(1..15) %></small>
               </div>
               <span class="text-body-secondary d-flex align-items-center"><%= "#{product_in_cart.price}円" %></span>
-              <small><%= link_to 'カートから削除', cart_path(product_in_cart.id, params: { cart_id: i }), data: { 'turbo-method': :delete }, class: 'btn btn-link btn-sm' %></small>
+              <small><%= link_to 'カートから削除', cart_path(product_in_cart.id, params: { cart_id: i }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %></small>
             </li>
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
