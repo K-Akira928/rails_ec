@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   namespace :cart do
-    get '/items', to: 'sessions#index'
+    get '/items', to: 'carts#index'
     put '/:id', to: 'sessions#update'
     delete '/:id', to: 'sessions#destroy'
   end

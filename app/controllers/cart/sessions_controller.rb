@@ -1,7 +1,4 @@
 class Cart::SessionsController < ApplicationController
-  def index
-  end
-
   def update
     num_of_items = params[:num_of_items].to_i
 
