@@ -6,7 +6,7 @@
     </div>
   </div>
 </header>
-    
+
 <div class="mt-5 container">
   <main>
     <div class="row g-5">
@@ -16,19 +16,22 @@
           <span class="badge bg-primary rounded-pill"><%= @product_in_carts.length %></span>
         </h4>
         <ul class="list-group mb-3">
-          <% @product_in_carts.each_with_index do |product_in_cart, i| %>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0"><%= product_in_cart.name %></h6>
-                <small class="text-body-secondary"><%= product_in_cart.description.slice(1..15) %></small>
-              </div>
-              <span class="text-body-secondary d-flex align-items-center"><%= "#{product_in_cart.price}円" %></span>
-              <small><%= link_to 'カートから削除', cart_path(product_in_cart.id, params: { cart_id: i }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %></small>
-            </li>
+          <% @product_in_carts.each do |product_in_cart| %>
+            <% product_in_cart.each_with_index do |(product, num_piece), i| %>
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0"><%= product.name %></h6>
+                  <small class="text-body-secondary"><%= product.description.slice(1..15) %></small>
+                </div>
+                <span class="text-body-secondary d-flex align-items-center"><%= "#{product.price}円" %></span>
+                <span class="text-body-secondary d-flex align-items-center"><%= "x#{num_piece}個" %></span>
+                <small><%= link_to 'カートから削除', cart_path(product.id, params: { cart_id: i }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %></small>
+              </li>
+            <% end %>
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (JPY)</span>
-            <strong><%= "#{(@product_in_carts.map { |product_in_cart| product_in_cart.price }).sum}円" %></strong>
+            <strong><%= "#{(@product_in_carts.map { |v| v.keys[0].price * v.values[0] }).sum}円" %></strong>
           </li>
         </ul>
 

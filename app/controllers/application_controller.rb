@@ -6,11 +6,10 @@ class ApplicationController < ActionController::Base
   private
 
   def num_of_products_in_current_cart
-    product_in_cart_ids = []
-    session[:product_in_cart_id] ||= product_in_cart_ids
+    session[:product_in_carts] ||= []
 
-    @product_in_carts = session[:product_in_cart_id].map do |prodcut_id|
-      Product.find_by(id: prodcut_id)
+    @product_in_carts = session[:product_in_carts].to_h.map do |key, value|
+      { Product.find_by(id: key) => value }
     end
   end
 end
