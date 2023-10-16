@@ -18,23 +18,49 @@
         <ul class="list-group mb-3">
           <% @products_in_cart_num_of_pieces.each do |product_id, num_of_pieces| %>
             <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
+              <div class="d-flex flex-column text-start" style="width: 40%;">
                 <h6 class="my-0"><%= product_get_info(product_id, :name) %></h6>
                 <small class="text-body-secondary"><%= product_get_info(product_id, :description).slice(0..14) %></small>
+                <div class="dropdown text-end">
+                  <button class="btn btn-link dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black; text-decoration: none;">
+                    <%= num_of_pieces %>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <% (1..num_of_pieces).each_with_index do |_v, i| %>
+                      <li><%= link_to "#{i}", cart_path(product_id, params: { num_of_pieces: num_of_pieces - i }), data: { turbo_method: :delete }, class: 'dropdown-item' %></li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
               <div>
-                <% if Product.find(product_id).image.attached? %>
-                  <%= image_tag Product.find(product_id).image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
-                <% else %>
-                  <%= image_tag 'no_image-75x50.jpg' %>
-                <% end %>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#productImageModal-<%= product_id %>">
+                  <% if Product.find(product_id).image.attached? %>
+                    <%= image_tag Product.find(product_id).image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
+                  <% else %>
+                    <%= image_tag 'no_image-75x50.jpg' %>
+                  <% end %>
+                </button>
               </div>
-              <div>
-                <span class="text-body-secondary d-flex align-items-center"><%= "x#{num_of_pieces}個" %></span>
-                <span class="text-body-secondary d-flex align-items-center"><%= "#{product_get_info(product_id, :price)}円" %></span>
-                <%= link_to 'カートから削除', cart_path(product_id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
+              <div class="d-flex flex-column text-end">
+                <span class="text-body-secondary"><%= "x#{num_of_pieces}個" %></span>
+                <span class="text-body-secondary"><%= "#{product_get_info(product_id, :price)}円" %></span>
+                <%= link_to '削除', cart_path(product_id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
               </div>
             </li>
+            <!--画像用モーダル-->
+            <div class="modal fade" id="productImageModal-<%= product_id %>" tabindex="-1" aria-labelledby="productImageModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div class="modal-body text-center">
+                    <% if Product.find(product_id).image.attached? %>
+                      <%= image_tag Product.find(product_id).image.variant(resize:'765', gravity: :center, crop:'765x510+0+0') %>
+                    <% else %>
+                      <%= image_tag 'no_image-450x300.jpg', size: "765x510" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (JPY)</span>
