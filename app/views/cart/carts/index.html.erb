@@ -22,9 +22,18 @@
                 <h6 class="my-0"><%= product_get_info(product_id, :name) %></h6>
                 <small class="text-body-secondary"><%= product_get_info(product_id, :description).slice(0..14) %></small>
               </div>
-              <span class="text-body-secondary d-flex align-items-center"><%= "#{product_get_info(product_id, :price)}円" %></span>
-              <span class="text-body-secondary d-flex align-items-center"><%= "x#{num_of_pieces}個" %></span>
-              <small><%= link_to 'カートから削除', cart_path(product_id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %></small>
+              <div>
+                <% if Product.find(product_id).image.attached? %>
+                  <%= image_tag Product.find(product_id).image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
+                <% else %>
+                  <%= image_tag 'no_image-75x50.jpg' %>
+                <% end %>
+              </div>
+              <div>
+                <span class="text-body-secondary d-flex align-items-center"><%= "x#{num_of_pieces}個" %></span>
+                <span class="text-body-secondary d-flex align-items-center"><%= "#{product_get_info(product_id, :price)}円" %></span>
+                <%= link_to 'カートから削除', cart_path(product_id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
+              </div>
             </li>
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
