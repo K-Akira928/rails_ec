@@ -3,8 +3,8 @@
 Rails.application.routes.draw do
   namespace :cart do
     get '/items', to: 'carts#index'
-    put '/:id', to: 'sessions#update'
-    delete '/:id', to: 'sessions#destroy'
+    post '/:id', to: 'carts#create'
+    delete '/:id', to: 'carts#destroy'
   end
 
   namespace :admin do
