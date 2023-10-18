@@ -27,7 +27,7 @@
                   </button>
                   <ul class="dropdown-menu">
                     <% (1..num_of_pieces).each_with_index do |_v, i| %>
-                      <li><%= link_to "#{i}", cart_product_path(product.id, params: { num_of_pieces: num_of_pieces - i }), data: { turbo_method: :delete }, class: 'dropdown-item' %></li>
+                      <li><%= link_to "#{i}", products_cart_product_path(product.id, params: { num_of_pieces: num_of_pieces - i }), data: { turbo_method: :delete }, class: 'dropdown-item' %></li>
                     <% end %>
                   </ul>
                 </div>
@@ -44,7 +44,7 @@
               <div class="d-flex flex-column text-end">
                 <span class="text-body-secondary"><%= "x#{num_of_pieces}個" %></span>
                 <span class="text-body-secondary"><%= "#{product.price}円" %></span>
-                <%= link_to '削除', cart_product_path(product.id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
+                <%= link_to '削除', products_cart_product_path(product.id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
               </div>
             </li>
             <!--画像用モーダル-->

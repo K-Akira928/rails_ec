@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :require_cart
   helper_method :current_products_in_cart
 
-  include Cart::CartsHelper
-  include Cart::ProductsHelper
+  include ProductsCart::CartsHelper
+  include ProductsCart::ProductsHelper
 end
