@@ -23,7 +23,7 @@
             </div>
             <p class="lead"><%= safe_join(@product.description.split("\n"),tag(:br)) %></p>
             <div class="d-flex form-group">
-              <%= form_tag cart_path(@product.id), method: :post do %>
+              <%= form_tag cart_products_path(params: { id: @product.id }), method: :post do %>
                 <%= number_field_tag :num_of_pieces, '1', class: "form-control text-center me-3", style: 'max-width: 4rem' %>
                 <%= submit_tag 'カートに追加', class: 'btn btn-outline-dark mt-4' %>
               <% end %>

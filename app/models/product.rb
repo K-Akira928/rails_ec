@@ -3,6 +3,7 @@
 class Product < ApplicationRecord
   has_one_attached :image
   has_many :product_in_carts, dependent: :destroy
+  has_many :carts, through: :product_in_carts
 
   validates :name, presence: true, length: { maximum: 20 }
   validates :price, presence: true, numericality: true

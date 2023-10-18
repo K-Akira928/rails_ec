@@ -2,9 +2,8 @@
 
 Rails.application.routes.draw do
   namespace :cart do
+    resources :products, only: %i[create destroy]
     get '/items', to: 'carts#index'
-    post '/:id', to: 'carts#create'
-    delete '/:id', to: 'carts#destroy'
   end
 
   namespace :admin do
