@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Cart < ApplicationRecord
-  has_many :products_in_carts, dependent: :destroy
-  has_many :products, through: :products_in_carts
+  has_many :cart_products, dependent: :destroy
+  has_many :products, through: :cart_products
 
   scope :amount, ->(id) { find_by(id:).products.sum(&:price) }
   scope :product_per_groups, lambda { |id|

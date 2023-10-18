@@ -3,7 +3,7 @@
 module ProductsCart
   module ProductsHelper
     def current_products_in_cart
-      Cart.find(session[:cart_id]).products_in_carts
+      Cart.find(session[:cart_id]).cart_products
     end
   end
 end
