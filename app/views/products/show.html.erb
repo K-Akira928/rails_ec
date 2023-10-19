@@ -22,12 +22,11 @@
               <span><%= "#{@product.price}円" %></span>
             </div>
             <p class="lead"><%= safe_join(@product.description.split("\n"),tag(:br)) %></p>
-            <div class="d-flex">
-              <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-              <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                <i class="bi-cart-fill me-1"></i>
-                カートに追加
-              </button>
+            <div class="d-flex form-group">
+              <%= form_tag products_cart_products_path(params: { id: @product.id }), method: :post do %>
+                <%= number_field_tag :num_of_pieces, '1', class: "form-control text-center me-3", style: 'max-width: 4rem' %>
+                <%= submit_tag 'カートに追加', class: 'btn btn-outline-dark mt-4' %>
+              <% end %>
             </div>
           </div>
         </div>

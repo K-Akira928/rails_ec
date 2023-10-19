@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  namespace :products_cart do
+    resources :products, only: %i[create destroy]
+    get '/items', to: 'carts#index'
+  end
 
   namespace :admin do
     resources :products, except: %i[show]
