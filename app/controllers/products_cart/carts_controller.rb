@@ -2,9 +2,12 @@
 
 module ProductsCart
   class CartsController < ApplicationController
+    include CartsConcern
+    before_action :set_cart
+
     def index
-      @product_per_groups = Cart.product_per_groups(session[:cart_id])
-      @cart_amount = Cart.amount(session[:cart_id])
+      @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
+      @cart_amount = @current_cart.products.sum(&:price)
     end
   end
 end
