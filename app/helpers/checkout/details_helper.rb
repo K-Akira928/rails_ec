@@ -1,0 +1,2 @@
+module Checkout::DetailsHelper
+end
