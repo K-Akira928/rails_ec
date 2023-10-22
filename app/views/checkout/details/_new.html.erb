@@ -1,0 +1,78 @@
+<%= form_with url: checkout_details_path, model: purchase_detail do |form| %>
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <%= form.label '苗字', class: 'form-label' %>
+      <%= form.text_field :last_name, class: "form-control", id: 'last_name' %>
+    </div>
+    <div class="col-sm-6">
+      <%= form.label '名前', class: 'form-label' %>
+      <%= form.text_field :first_name, class: 'form-control', id: 'first_name' %>
+    </div>
+    <div class="col-12">
+      <%= form.label 'ユーザーネーム', class: 'form-label' %>
+      <div class="input-group has-validation">
+        <span class="input-group-text">@</span>
+        <%= form.text_field :user_name, class: 'form-control', id: 'user_name', placeholder: 'username' %>
+      </div>
+    </div>
+    <div class="col-12">
+      <%= form.label 'メールアドレス', class: 'form-label' %>
+      <%= form.text_field :email, class: 'form-control', id: 'email', placeholder: 'you@example.com' %>
+    </div>
+    <div class="col-12">
+      <%= form.label '住所1', class: 'form-label' %>
+      <%= form.text_field :address_first, class: 'form-control', id: 'address_firest', placeholder: '市区町村' %>
+    </div>
+    <div class="col-12">
+      <label for="address2" class="form-label">住所2</label>
+      <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+      <%= form.label '住所2', class: 'form-label' %>
+      <%= form.text_field :address_second, class: 'form-control', id: 'address_second', placeholder: '番地 建物名' %>
+    </div>
+    <div class="col-md-5">
+      <%= form.label '国', class: 'form-label' %>
+      <%= form.select :country, [['選択...', nil], ['日本', '日本']], {}, { class: 'form-select' } %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label '都道府県', class: 'form-label' %>
+      <%= form.select :prefecture, [['選択...', nil], ['北海道', '北海道']], {}, { class: 'form-select' } %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label '郵便番号', class: 'form-label' %>
+      <%= form.text_field :post_code, class: 'form-control', id: 'post_code', placeholder: '000-0000' %>
+    </div>
+  </div>
+  <hr class="my-4">
+  <div class="form-check">
+    <%= form.check_box :shipping_address_consent, { class: 'form-check-input', id: 'shipping_address_consent' }, checkd_value: true, uncheckd_value: false %>
+    <%= form.label '請求先の住所は配送先の住所と一緒です', class: 'form-check-label' %>
+  </div>
+  <div class="form-check">
+    <%= form.check_box :save_for_next_time, { class: 'form-check-input', id: 'save_for_next_time' }, checkd_value: true, uncheckd_value: false %>
+    <%= form.label '次回もこの情報を使用する', class: 'form-check-label' %>
+  </div>
+  <hr class="my-4">
+  <div class="row gy-3">
+    <div class="col-md-6">
+      <%= form.label 'カード名義人', class: 'form-label' %>
+      <%= form.text_field :card_holder, class: 'form-control', id: 'card_holder' %>
+      <small class="text-body-secondary">カードの名義フルネーム</small>
+    </div>
+    <div class="col-md-6">
+      <%= form.label 'カード番号', class: 'form-label' %>
+      <%= form.text_field :card_number, class: 'form-control', id: 'card_number' %>
+    </div>
+    <div class="col-md-3">
+      <%= form.label '有効期限', class: 'form-label' %>
+      <p>
+        <%= form.date_select :good_thru, { discard_day: true, end_year: 2100 }, { class: 'form-control', id: 'good_thru', style: 'display: inline-block; width: auto;' } %>
+      </p>
+    </div>
+    <div class="col-md-3">
+      <%= form.label 'CVV', class: 'form-label' %>
+      <%= form.text_field :cvv, class: 'form-control', id: 'cvv' %>
+    </div>
+  </div>
+  <hr class="my-4">
+  <%= form.submit '購入する', class: 'mb-5 w-100 btn btn-primary btn-lg' %>
+<% end %>
