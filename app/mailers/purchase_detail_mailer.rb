@@ -1,0 +1,2 @@
+class PurchaseDetailMailer < ApplicationMailer
+end
