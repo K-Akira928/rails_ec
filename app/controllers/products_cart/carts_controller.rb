@@ -5,6 +5,8 @@ module ProductsCart
     def index
       @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
       @cart_amount = @current_cart.products.sum(&:price)
+
+      @buyer_info = BuyerInfo.new
     end
   end
 end

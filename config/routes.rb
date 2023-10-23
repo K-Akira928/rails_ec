@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     get '/items', to: 'carts#index'
   end
 
+  namespace :checkout do
+    resources :details, only: %i[create]
+  end
+
   namespace :admin do
     resources :products, except: %i[show]
   end
