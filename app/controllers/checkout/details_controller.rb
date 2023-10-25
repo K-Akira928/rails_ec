@@ -3,11 +3,13 @@ class Checkout::DetailsController < ApplicationController
     buyer_info = BuyerInfo.new(buyer_info_params)
 
     if buyer_info.save
-      purchase_detail_id = buyer_info.purchase_detail.create(buyer_info_id: buyer_info.id).id
+      purchase_detail = buyer_info.purchase_detail.create(buyer_info_id: buyer_info.id)
 
       @current_cart.cart_products.group(:product_id).count.each do |product_id, num_of_pieces|
-        BuyProduct.create(product_id:, purchase_detail_id:, num_of_pieces:)
+        BuyProduct.create(product_id:, purchase_detail_id: purchase_detail.id, num_of_pieces:)
       end
+
+      PurchaseDetailMailer.detail_mail(purchase_detail).deliver_later
 
       @current_cart.destroy
       session[:cart_id] = nil

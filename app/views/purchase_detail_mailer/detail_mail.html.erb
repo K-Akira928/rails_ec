@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <hr size="5" noshade="">
+    <h2>ご注文内容</h2>
+    <p><%= "明細ID:#{@purchase_detail.id}" %></p>
+    <hr size="5" noshade="">
+    <% @buy_products.each do |product| %>
+      <p><%= "商品名:#{product.product.name}" %></p>
+      <p><%= "価格 #{product.product.price}(円) x #{product.num_of_pieces}(個) = #{product.product.price * product.num_of_pieces}(円)" %></p>
+      <hr>
+    <% end %>
+    <p>◆お届け先◆</p>
+    <p><%= "お名前:#{@buyer_info.last_name + @buyer_info.first_name} 様" %></p>
+    <p><%= "ユーザーネーム:#{@buyer_info.user_name}" %></p>
+    <p><%= "郵便番号:#{@buyer_info.post_code}" %></p>
+    <p><%= "ご住所:#{@buyer_info.country + @buyer_info.prefecture + @buyer_info.address_first + @buyer_info.address_second}" %></p>
+    <hr>
+    <p>ご請求内容</p>
+    <p><%= "合計金額:#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円" %></p>
+  </body>
+</html>
