@@ -13,7 +13,11 @@ class Checkout::DetailsController < ApplicationController
 
       @current_cart.destroy
       session[:cart_id] = nil
-      
+
+      if @buyer_info.save_for_next_time
+        session[:buyer_info_id] = @buyer_info.id
+      end
+
       redirect_to root_path, notice: '購入ありがとうございます'
     else
       @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
