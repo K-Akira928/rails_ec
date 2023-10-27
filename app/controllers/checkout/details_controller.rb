@@ -1,9 +1,9 @@
 class Checkout::DetailsController < ApplicationController
   def create
-    buyer_info = BuyerInfo.new(buyer_info_params)
+    @buyer_info = BuyerInfo.new(buyer_info_params)
 
-    if buyer_info.save
-      purchase_detail = buyer_info.purchase_detail.create(buyer_info_id: buyer_info.id)
+    if @buyer_info.save
+      purchase_detail = buyer_info.purchase_detail.create(buyer_info_id: @buyer_info.id)
 
       @current_cart.cart_products.group(:product_id).count.each do |product_id, num_of_pieces|
         BuyProduct.create(product_id:, purchase_detail_id: purchase_detail.id, num_of_pieces:)
@@ -16,7 +16,9 @@ class Checkout::DetailsController < ApplicationController
 
       redirect_to root_path
     else
-      render :create, status: :unprocessable_entity
+      @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
+      flash.now[:alert] = @buyer_info.errors.full_messages
+      render 'products_cart/carts/index', status: :unprocessable_entity
     end
   end
 

@@ -16,6 +16,14 @@ ja:
               not_a_number: は半角数字で入力してください
             description:
               too_long: は360文字以内で入力してください
+        buyer_info:
+          attributes:
+            user_name:
+              too_long: 15文字以内で入力してください
+            card_number:
+              too_short: 14桁以上、16桁以内でカード番号を入力してください
+            cvv:
+              too_long: 3桁以内で入力してください
   errors:
     messages:
       blank: を入力してください
