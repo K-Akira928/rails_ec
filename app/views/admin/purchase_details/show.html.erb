@@ -1,0 +1,64 @@
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Akira Mart</h1>
+      <p class="lead fw-normal text-white-50 mb-0">明細詳細画面</p>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <h2 class="mt-4"><%= "明細ID:#{@purchase_detail.id}" %></h2>
+  <hr>
+  <div class="d-flex justify-content-around">
+    <div>
+      <h5>お届け先</h5>
+      <span>名前</span>
+      <p><%= @buyer_info.last_name + @buyer_info.first_name %></p>
+      <span>ユーザーネーム</span>
+      <p><%= @buyer_info.user_name %></p>
+      <span>メールアドレス</span>
+      <p><%= @buyer_info.email %></p>
+      <span>住所</span>
+      <p>
+        <%= @buyer_info.country %>
+        <%= @buyer_info.prefecture %>
+        <%= @buyer_info.address_first + @buyer_info.address_second %>
+      </p>
+    </div>
+    <div>
+      <h5>購入商品</h5>
+      <% @buy_products.each do |product| %>
+        <div class="d-flex justify-content-between">
+
+          <div style="width: 30%;">
+            <span>商品名</span>
+            <p><%= product.product.name %></p>
+          </div>
+
+          <div>
+            <% if product.product.image.attached? %>
+              <%= image_tag product.product.image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
+            <% else %>
+              <%= image_tag 'no_image-75x50.jpg' %>
+            <% end %>
+          </div>
+
+          <div>
+            <span>価格</span>
+            <p><%= "#{product.product.price}円" %></p>
+          </div>
+
+          <div>
+            <span>個数</span>
+            <p><%= "#{product.num_of_pieces}個" %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <hr>
+  <div style="text-align: center; margin-bottom: 25px">
+    <h2>小計</h2>
+    <h5><%= "<#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円>" %></h5>
+  </div>
+</div>
