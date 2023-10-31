@@ -11,7 +11,7 @@ class Checkout::DetailsController < ApplicationController
   def update
     @existing_buyer_info = BuyerInfo.find(session[:buyer_info_id])
 
-    if @existing_buyer_info.there_a_change_in?(@buyer_info)
+    if @existing_buyer_info.there_a_change_in?(@buyer_info) && @current_cart.cart_products.present?
       @existing_buyer_info.update(buyer_info_params)
       normal_purchase_processed(@existing_buyer_info)
 
