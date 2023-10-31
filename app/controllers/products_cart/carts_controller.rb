@@ -3,8 +3,9 @@
 module ProductsCart
   class CartsController < ApplicationController
     def index
-      @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
+      @product_per_groups = @current_cart.product_per_groups
       @cart_amount = @current_cart.products.sum(&:price)
+      @does_buyer_info_exists = session[:buyer_info_id].blank?
 
       @buyer_info = if session[:buyer_info_id]
                       BuyerInfo.find(session[:buyer_info_id])

@@ -1,28 +1,25 @@
 class Checkout::DetailsController < ApplicationController
+  before_action :set_buyer_info
   def create
-    @buyer_info = BuyerInfo.new(buyer_info_params)
-
-    if @buyer_info.save
-      purchase_detail = @buyer_info.purchase_detail.create(buyer_info_id: @buyer_info.id)
-
-      @current_cart.cart_products.group(:product_id).count.each do |product_id, num_of_pieces|
-        BuyProduct.create(product_id:, purchase_detail_id: purchase_detail.id, num_of_pieces:)
-      end
-
-      PurchaseDetailMailer.detail_mail(purchase_detail).deliver_later
-
-      @current_cart.destroy
-      session[:cart_id] = nil
-
-      if @buyer_info.save_for_next_time
-        session[:buyer_info_id] = @buyer_info.id
-      end
-
-      redirect_to root_path, notice: '購入ありがとうございます'
+    if @buyer_info.save && @current_cart.cart_products.present?
+      normal_purchase_processed(@buyer_info)
     else
-      @product_per_groups = @current_cart.products.group(:product_id).count.transform_keys! { |k| Product.find(k) }
-      flash.now[:alert] = @buyer_info.errors.full_messages
-      render 'products_cart/carts/index', status: :unprocessable_entity
+      abnormal_purchase_processed
+    end
+  end
+
+  def update
+    @existing_buyer_info = BuyerInfo.find(session[:buyer_info_id])
+
+    if @existing_buyer_info.there_a_change_in?(@buyer_info)
+      @existing_buyer_info.update(buyer_info_params)
+      normal_purchase_processed(@existing_buyer_info)
+
+    elsif @buyer_info.save && @current_cart.cart_products.present?
+      normal_purchase_processed(@buyer_info)
+
+    else
+      abnormal_purchase_processed
     end
   end
 
@@ -46,5 +43,30 @@ class Checkout::DetailsController < ApplicationController
       :good_thru,
       :cvv
     )
+  end
+
+  def abnormal_purchase_processed
+    @product_per_groups = @current_cart.product_per_groups
+    flash.now[:alert] = @buyer_info.errors.full_messages
+    render 'products_cart/carts/index', status: :unprocessable_entity and return
+  end
+
+  def normal_purchase_processed(buyer_info)
+    purchase_detail = buyer_info.purchase_details.create
+    purchase_detail.create_buy_products_use_cart_info(@current_cart, purchase_detail)
+
+    PurchaseDetailMailer.detail_mail(purchase_detail).deliver_later
+
+    @current_cart.destroy
+    session[:cart_id] = nil
+
+    session[:buyer_info_id] = buyer_info.id if buyer_info.save_for_next_time
+    session[:buyer_info_id] = nil unless buyer_info.save_for_next_time
+
+    redirect_to root_path, notice: '購入ありがとうございます' and return
+  end
+
+  def set_buyer_info
+    @buyer_info = BuyerInfo.new(buyer_info_params)
   end
 end

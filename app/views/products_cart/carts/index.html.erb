@@ -82,7 +82,11 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">請求先住所</h4>
-        <%= render partial: 'checkout/details/new', locals: { buyer_info: @buyer_info } %>
+        <% if session[:buyer_info_id].blank? %>
+          <%= render partial: 'checkout/details/new', locals: { path: checkout_details_path, buyer_info: @buyer_info } %>
+        <% else %>
+          <%= render partial: 'checkout/details/new', locals: { path: checkout_detail_path(session[:buyer_info_id]), buyer_info: @buyer_info } %>
+        <% end %>
       </div>
     </div>
   </main>

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   namespace :checkout do
-    resources :details, only: %i[create]
+    resources :details, only: %i[create update]
   end
 
   namespace :admin do
