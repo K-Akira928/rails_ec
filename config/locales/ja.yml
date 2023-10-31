@@ -20,6 +20,12 @@ ja:
           attributes:
             user_name:
               too_long: 15文字以内で入力してください
+            email:
+              invalid:
+                を正しい形式で入力してください
+            post_code:
+              invalid:
+                を正しい形式で入力してください
             card_number:
               too_short: 14桁以上、16桁以内でカード番号を入力してください
             cvv:
