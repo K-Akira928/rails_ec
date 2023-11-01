@@ -29,12 +29,10 @@
       <h5>購入商品</h5>
       <% @buy_products.each do |product| %>
         <div class="d-flex justify-content-between">
-
           <div style="width: 30%;">
             <span>商品名</span>
             <p><%= product.product.name %></p>
           </div>
-
           <div>
             <% if product.product.image.attached? %>
               <%= image_tag product.product.image.variant(resize:'75', gravity: :center, crop:'75x50+0+0').processed, class: "rounded float-start" %>
@@ -42,12 +40,10 @@
               <%= image_tag 'no_image-75x50.jpg' %>
             <% end %>
           </div>
-
           <div>
             <span>価格</span>
             <p><%= "#{product.product.price}円" %></p>
           </div>
-
           <div>
             <span>個数</span>
             <p><%= "#{product.num_of_pieces}個" %></p>

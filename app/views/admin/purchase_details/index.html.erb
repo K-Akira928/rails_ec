@@ -19,14 +19,14 @@
     </thead>
     <tbody>
       <% @purchase_details.each do |detail| %>
-          <tr>
-            <td class="align-middle"><%= detail.id %></td>
-            <td class="align-middle"><%= detail.buyer_info_id %></td>
-            <td class="align-middle"><%= detail.buyer_info.last_name + detail.buyer_info.first_name %></td>
-            <td class="align-middle"><%= detail.created_at.to_formatted_s(:datetime_jp) %></td>
-            <td class="align-middle"><%= link_to '詳細', admin_purchase_detail_path(detail.id), class: 'btn btn-primary' %>
+        <tr>
+          <td class="align-middle"><%= detail.id %></td>
+          <td class="align-middle"><%= detail.buyer_info_id %></td>
+          <td class="align-middle"><%= detail.buyer_info.last_name + detail.buyer_info.first_name %></td>
+          <td class="align-middle"><%= detail.created_at.to_formatted_s(:datetime_jp) %></td>
+          <td class="align-middle"><%= link_to '詳細', admin_purchase_detail_path(detail.id), class: 'btn btn-primary' %>
           </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
