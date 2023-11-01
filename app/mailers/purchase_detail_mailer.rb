@@ -1,5 +1,5 @@
 class PurchaseDetailMailer < ApplicationMailer
-  def detail_mail(purchase_detail)
+  def detail_mail(purchase_detail, buyer_email)
 
     @purchase_detail = purchase_detail
     @buy_products = BuyProduct.where(purchase_detail_id: purchase_detail.id)
@@ -7,7 +7,7 @@ class PurchaseDetailMailer < ApplicationMailer
 
     mail(
       from: 'K.AkiraRei928@gmail.com',
-      to: 'cree928syo@gmail.com',
+      to: buyer_email,
       subject: 'AkiraMart 購入明細'
     )
   end

@@ -14,10 +14,10 @@
       <hr>
     <% end %>
     <p>◆お届け先◆</p>
-    <p><%= "お名前:#{@buyer_info.last_name + @buyer_info.first_name} 様" %></p>
+    <p><%= "お名前:#{[@buyer_info.last_name, @buyer_info.first_name].join(' ')} 様" %></p>
     <p><%= "ユーザーネーム:#{@buyer_info.user_name}" %></p>
     <p><%= "郵便番号:#{@buyer_info.post_code}" %></p>
-    <p><%= "ご住所:#{@buyer_info.country + @buyer_info.prefecture + @buyer_info.address_first + @buyer_info.address_second}" %></p>
+    <p><%= "ご住所:#{[@buyer_info.country, @buyer_info.prefecture, @buyer_info.address_first, @buyer_info.address_second].join(' ')}" %></p>
     <hr>
     <p>ご請求内容</p>
     <p><%= "合計金額:#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円" %></p>

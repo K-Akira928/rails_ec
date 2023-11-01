@@ -55,7 +55,7 @@ class Checkout::DetailsController < ApplicationController
     purchase_detail = buyer_info.purchase_details.create
     purchase_detail.create_buy_products_use_cart_info(@current_cart, purchase_detail)
 
-    PurchaseDetailMailer.detail_mail(purchase_detail).deliver_later
+    PurchaseDetailMailer.detail_mail(purchase_detail, buyer_info.email).deliver_later
 
     @current_cart.destroy
     session[:cart_id] = nil
