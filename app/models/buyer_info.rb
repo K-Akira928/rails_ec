@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BuyerInfo < ApplicationRecord
   has_many :purchase_details, dependent: :destroy
 
