@@ -6,7 +6,7 @@ class PurchaseDetailMailer < ApplicationMailer
     @buyer_info = purchase_detail.buyer_info
 
     mail(
-      from: 'K.AkiraRei928@gmail.com',
+      from: ENV['GMAIL_USER'],
       to: buyer_email,
       subject: 'AkiraMart 購入明細'
     )
