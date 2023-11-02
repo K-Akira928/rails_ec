@@ -3,7 +3,7 @@
 class PurchaseHistoryMailer < ApplicationMailer
   def history_mail(purchase_history, buyer_email)
     @purchase_history = purchase_history
-    @buy_products = BuyProduct.where(purchase_history_id: purchase_history.id)
+    @buy_products = PurchaseHistoryProduct.where(purchase_history_id: purchase_history.id)
     @buyer_info = purchase_history.buyer_info
 
     mail(
