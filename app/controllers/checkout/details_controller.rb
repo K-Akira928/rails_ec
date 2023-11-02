@@ -5,9 +5,9 @@ module Checkout
     before_action :set_buyer_info
     def create
       if @buyer_info.save && @current_cart.cart_products.present?
-        normal_purchase_processed(@buyer_info)
+        success_purchase_processed(@buyer_info)
       else
-        abnormal_purchase_processed
+        failed_purchase_processed
       end
     end
 
@@ -16,13 +16,13 @@ module Checkout
 
       if @existing_buyer_info.there_a_change_in?(@buyer_info) && @current_cart.cart_products.present?
         @existing_buyer_info.update(buyer_info_params)
-        normal_purchase_processed(@existing_buyer_info)
+        success_purchase_processed(@existing_buyer_info)
 
       elsif @buyer_info.save && @current_cart.cart_products.present?
-        normal_purchase_processed(@buyer_info)
+        success_purchase_processed(@buyer_info)
 
       else
-        abnormal_purchase_processed
+        failed_purchase_processed
       end
     end
 
@@ -48,13 +48,13 @@ module Checkout
       )
     end
 
-    def abnormal_purchase_processed
+    def failed_purchase_processed
       @product_per_groups = @current_cart.product_per_groups
       flash.now[:alert] = @buyer_info.errors.full_messages
       render 'products_cart/carts/index', status: :unprocessable_entity and return
     end
 
-    def normal_purchase_processed(buyer_info)
+    def success_purchase_processed(buyer_info)
       purchase_detail = buyer_info.purchase_details.create
       purchase_detail.create_buy_products_use_cart_info(@current_cart, purchase_detail)
 
