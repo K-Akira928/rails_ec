@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Checkout
-  class DetailsController < ApplicationController
+  class PurchaseHistoriesController < ApplicationController
     before_action :set_buyer_info
     def create
       if @buyer_info.save && @current_cart.cart_products.present?
@@ -55,10 +55,10 @@ module Checkout
     end
 
     def success_purchase_processed(buyer_info)
-      purchase_detail = buyer_info.purchase_details.create
-      purchase_detail.create_buy_products_use_cart_info(@current_cart, purchase_detail)
+      purchase_history = buyer_info.purchase_histories.create
+      purchase_history.create_buy_products_use_cart_info(@current_cart, purchase_history)
 
-      PurchaseDetailMailer.detail_mail(purchase_detail, buyer_info.email).deliver_later
+      PurchaseHistoryMailer.history_mail(purchase_history, buyer_info.email).deliver_later
 
       @current_cart.destroy
       session[:cart_id] = nil

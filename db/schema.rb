@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_21_122252) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_152128) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_122252) do
 
   create_table "buy_products", force: :cascade do |t|
     t.integer "product_id"
-    t.integer "purchase_detail_id"
+    t.integer "purchase_history_id"
     t.integer "num_of_pieces", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,7 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_122252) do
     t.index ["discarded_at"], name: "index_products_on_discarded_at"
   end
 
-  create_table "purchase_details", force: :cascade do |t|
+  create_table "purchase_histories", force: :cascade do |t|
     t.integer "buyer_info_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

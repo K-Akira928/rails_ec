@@ -6,7 +6,7 @@
   <body>
     <hr size="5" noshade="">
     <h2>ご注文内容</h2>
-    <p><%= "明細ID:#{@purchase_detail.id}" %></p>
+    <p><%= "明細ID:#{@purchase_history.id}" %></p>
     <hr size="5" noshade="">
     <% @buy_products.each do |product| %>
       <p><%= "商品名:#{product.product.name}" %></p>

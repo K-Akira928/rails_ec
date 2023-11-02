@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe PurchaseDetailMailer, type: :mailer do
+RSpec.describe PurchaseHistory, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
 end

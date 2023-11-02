@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BuyerInfo < ApplicationRecord
-  has_many :purchase_details, dependent: :destroy
+  has_many :purchase_histories, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_POST_CODE_REGEX = /\A[0-9]{3}-[0-9]{4}\z/i
