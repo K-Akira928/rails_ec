@@ -18,13 +18,13 @@
       </tr>
     </thead>
     <tbody>
-      <% @purchase_details.each do |detail| %>
+      <% @purchase_histories.each do |history| %>
         <tr>
-          <td class="align-middle"><%= detail.id %></td>
-          <td class="align-middle"><%= detail.buyer_info_id %></td>
-          <td class="align-middle"><%= detail.buyer_info.last_name + detail.buyer_info.first_name %></td>
-          <td class="align-middle"><%= detail.created_at.to_formatted_s(:datetime_jp) %></td>
-          <td class="align-middle"><%= link_to '詳細', admin_purchase_detail_path(detail.id), class: 'btn btn-primary' %>
+          <td class="align-middle"><%= history.id %></td>
+          <td class="align-middle"><%= history.buyer_info_id %></td>
+          <td class="align-middle"><%= history.buyer_info.last_name + history.buyer_info.first_name %></td>
+          <td class="align-middle"><%= history.created_at.to_formatted_s(:datetime_jp) %></td>
+          <td class="align-middle"><%= link_to '詳細', admin_purchase_history_path(history.id), class: 'btn btn-primary' %>
           </tr>
         <% end %>
       </tbody>

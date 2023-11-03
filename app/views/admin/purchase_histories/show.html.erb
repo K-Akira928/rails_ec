@@ -7,27 +7,27 @@
   </div>
 </header>
 <div class="container">
-  <h2 class="mt-4"><%= "明細ID:#{@purchase_detail.id}" %></h2>
+  <h2 class="mt-4"><%= "明細ID:#{@purchase_history.id}" %></h2>
   <hr>
   <div class="d-flex justify-content-around">
     <div>
       <h5>お届け先</h5>
       <span>名前</span>
-      <p><%= @buyer_info.last_name + @buyer_info.first_name %></p>
+      <p><%= @purchase_history.buyer_info.last_name + @purchase_history.buyer_info.first_name %></p>
       <span>ユーザーネーム</span>
-      <p><%= @buyer_info.user_name %></p>
+      <p><%= @purchase_history.buyer_info.user_name %></p>
       <span>メールアドレス</span>
-      <p><%= @buyer_info.email %></p>
+      <p><%= @purchase_history.buyer_info.email %></p>
       <span>住所</span>
       <p>
-        <%= @buyer_info.country %>
-        <%= @buyer_info.prefecture %>
-        <%= @buyer_info.address_first + @buyer_info.address_second %>
+        <%= @purchase_history.buyer_info.country %>
+        <%= @purchase_history.buyer_info.prefecture %>
+        <%= @purchase_history.buyer_info.address_first + @purchase_history.buyer_info.address_second %>
       </p>
     </div>
     <div>
       <h5>購入商品</h5>
-      <% @buy_products.each do |product| %>
+      <% @purchase_history.purchase_history_products.each do |product| %>
         <div class="d-flex justify-content-between">
           <div style="width: 30%;">
             <span>商品名</span>
@@ -55,6 +55,6 @@
   <hr>
   <div style="text-align: center; margin-bottom: 25px">
     <h2>小計</h2>
-    <h5><%= "<#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円>" %></h5>
+    <h5><%= "<#{@purchase_history.purchase_history_products.sum { |product| product.product.price * product.num_of_pieces }}円>" %></h5>
   </div>
 </div>
