@@ -4,7 +4,7 @@ module Checkout
   class PurchaseHistoriesController < ApplicationController
     before_action :set_buyer_info
     def create
-      if @buyer_info.save && @current_cart.cart_products.present?
+      if @buyer_info.valid? && @current_cart.cart_products.present?
         success_purchase_processed(@buyer_info)
       else
         failed_purchase_processed
@@ -15,10 +15,10 @@ module Checkout
       @existing_buyer_info = BuyerInfo.find(session[:buyer_info_id])
 
       if @existing_buyer_info.there_a_change_in?(@buyer_info) && @current_cart.cart_products.present?
-        @existing_buyer_info.update(buyer_info_params)
+        @existing_buyer_info.update!(buyer_info_params)
         success_purchase_processed(@existing_buyer_info)
 
-      elsif @buyer_info.save && @current_cart.cart_products.present?
+      elsif @buyer_info.valid? && @current_cart.cart_products.present?
         success_purchase_processed(@buyer_info)
 
       else
@@ -55,10 +55,13 @@ module Checkout
     end
 
     def success_purchase_processed(buyer_info)
-      purchase_history = buyer_info.purchase_histories.create
-      purchase_history.create_buy_products_use_cart_info(@current_cart, purchase_history)
+      buyer_info.transaction do
+        buyer_info.save!
+        @purchase_history = buyer_info.purchase_histories.create!
+        @purchase_history.create_buy_products_use_cart_info(@current_cart, @purchase_history)
+      end
 
-      PurchaseHistoryMailer.history_mail(purchase_history, buyer_info.email).deliver_later
+      PurchaseHistoryMailer.history_mail(@purchase_history, buyer_info.email).deliver_later
 
       @current_cart.destroy
       session[:cart_id] = nil
@@ -67,6 +70,10 @@ module Checkout
       session[:buyer_info_id] = nil unless buyer_info.save_for_next_time
 
       redirect_to root_path, notice: '購入ありがとうございます' and return
+    rescue ActiveRecord::RecordInvalid
+      @product_per_groups = @current_cart.product_per_groups
+      flash.now[:alert] = ['処理に失敗したためもう一度やりなおしてください']
+      render 'products_cart/carts/index', status: :internal_server_error and return
     end
 
     def set_buyer_info
