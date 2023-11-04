@@ -1,0 +1,32 @@
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Akira Mart</h1>
+      <p class="lead fw-normal text-white-50 mb-0">明細管理画面</p>
+    </div>
+  </div>
+</header>
+<div class="container">
+  <table class="my-5 table table-hover">
+    <thead class="sticky-top bg-white">
+      <tr>
+        <th scope="col">明細ID</th>
+        <th scope="col">購入者ID</th>
+        <th scope="col">名前</th>
+        <th scope="col">購入日</th>
+        <th scope="col">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @purchase_histories.each do |history| %>
+        <tr>
+          <td class="align-middle"><%= history.id %></td>
+          <td class="align-middle"><%= history.buyer_info_id %></td>
+          <td class="align-middle"><%= history.buyer_info.last_name + history.buyer_info.first_name %></td>
+          <td class="align-middle"><%= history.created_at.to_formatted_s(:datetime_jp) %></td>
+          <td class="align-middle"><%= link_to '詳細', admin_purchase_history_path(history.id), class: 'btn btn-primary' %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

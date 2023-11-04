@@ -6,6 +6,6 @@ module CartsConcern
   private
 
   def set_cart
-    @current_cart = Cart.find(session[:cart_id])
+    @current_cart = Cart.current(session[:cart_id])
   end
 end

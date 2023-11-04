@@ -5,7 +5,7 @@ module Admin
     before_action :set_product, only: %i[edit update destroy]
 
     def index
-      @products = Product.all.order(updated_at: :DESC)
+      @products = Product.where(discarded_at: nil).order(updated_at: :DESC)
     end
 
     def new
@@ -26,7 +26,13 @@ module Admin
     def edit; end
 
     def update
-      if @product.update(product_params)
+      old_product = @product
+      @product.discard
+      @product = Product.new(product_params)
+
+      if @product.save
+        @product.image.attach(old_product.image.blob)
+        @current_cart.cart_products.where(product_id: old_product.id).destroy_all
         redirect_and_flash_message('編集')
       else
         flash.now[:alert] = @product.errors.full_messages
@@ -35,7 +41,8 @@ module Admin
     end
 
     def destroy
-      @product.destroy
+      @product.discard
+      @current_cart.cart_products.where(product_id: @product.id).destroy_all
       redirect_and_flash_message('削除')
     end
 

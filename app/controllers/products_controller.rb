@@ -2,7 +2,7 @@
 
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    @products = Product.where(discarded_at: nil).order(updated_at: :DESC)
   end
 
   def show

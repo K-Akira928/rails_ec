@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_150643) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_162953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_150643) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "buyer_infos", force: :cascade do |t|
+    t.string "last_name", null: false
+    t.string "first_name", null: false
+    t.string "user_name", null: false
+    t.string "email", null: false
+    t.string "address_first", null: false
+    t.string "address_second", null: false
+    t.string "country", null: false
+    t.string "prefecture", null: false
+    t.boolean "shipping_address_consent", default: false, null: false
+    t.boolean "save_for_next_time", default: false, null: false
+    t.string "post_code", null: false
+    t.string "card_holder", null: false
+    t.string "card_number", null: false
+    t.date "good_thru", null: false
+    t.string "cvv", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cart_products", force: :cascade do |t|
     t.integer "product_id"
     t.integer "cart_id"
@@ -58,6 +78,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_150643) do
     t.string "name"
     t.integer "price"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_products_on_discarded_at"
+  end
+
+  create_table "purchase_histories", force: :cascade do |t|
+    t.integer "buyer_info_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "purchase_history_products", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "purchase_history_id"
+    t.integer "num_of_pieces", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

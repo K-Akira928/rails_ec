@@ -2,9 +2,6 @@
 
 module ProductsCart
   class ProductsController < ApplicationController
-    include CartsConcern
-    before_action :set_cart
-
     def create
       params[:num_of_pieces].to_i.times do
         @current_cart.cart_products.create(product_id: params[:id], cart_id: session[:cart_id])
