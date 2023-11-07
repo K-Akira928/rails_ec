@@ -7,6 +7,8 @@ module ProductsCart
       @cart_amount = @current_cart.products.sum(&:price)
       @does_buyer_info_exists = session[:buyer_info_id].blank?
 
+      @promotion_discout = @current_cart.promotion_code.discount if @current_cart.promotion_code.present?
+
       @buyer_info = if session[:buyer_info_id]
                       BuyerInfo.find(session[:buyer_info_id])
                     else
