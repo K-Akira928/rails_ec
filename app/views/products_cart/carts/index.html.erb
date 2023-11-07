@@ -73,12 +73,12 @@
             <strong><%= "#{@cart_amount}円" %></strong>
           </li>
         </ul>
-        <form class="card p-2">
+        <%= form_tag products_cart_promotion_code_path(@current_cart.id), method: :patch do %>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
-            <button type="submit" class="btn btn-secondary">Redeem</button>
+            <%= text_field_tag :code, '', { maxlength: 7, placeholder: 'Promo Code', class: 'form-control' } %>
+            <%= submit_tag 'Redeem', class: 'btn btn-secondary' %>
           </div>
-        </form>
+        <% end %>
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">請求先住所</h4>
