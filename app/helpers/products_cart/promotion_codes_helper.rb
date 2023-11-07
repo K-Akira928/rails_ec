@@ -1,0 +1,2 @@
+module ProductsCart::PromotionCodesHelper
+end
