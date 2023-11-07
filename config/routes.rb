@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   namespace :products_cart do
-    resources :promotion_codes, only: %i[update]
+    resources :promotion_codes, only: %i[update destroy]
     resources :products, only: %i[create destroy]
     get '/items', to: 'carts#index'
   end
