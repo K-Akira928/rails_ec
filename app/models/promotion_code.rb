@@ -1,4 +1,5 @@
 class PromotionCode < ApplicationRecord
+  include Discard::Model
   has_one :cart, dependent: :destroy
 
   VALID_CODE_REGEX = /\A^[0-9a-zA-Z]*$\z/i

@@ -57,8 +57,9 @@ module Checkout
     def success_purchase_processed(buyer_info)
       buyer_info.transaction do
         buyer_info.save!
-        @purchase_history = buyer_info.purchase_histories.create!
+        @purchase_history = buyer_info.purchase_histories.create!(promotion_code_id: @current_cart.promotion_code_id)
         @purchase_history.create_buy_products_use_cart_info(@current_cart, @purchase_history)
+        @current_cart.promotion_code.discard
       end
 
       PurchaseHistoryMailer.history_mail(@purchase_history, buyer_info.email).deliver_later
