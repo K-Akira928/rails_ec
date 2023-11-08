@@ -53,20 +53,6 @@
                 <%= link_to '削除', products_cart_product_path(product.id, params: { num_of_pieces: num_of_pieces }), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
               </div>
             </li>
-            <% if @current_cart.promotion_code.present? %>
-              <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                <div class="text-success">
-                  <h6 class="my-0">プロモーションコード</h6>
-                  <small>
-                    <%= @current_cart.promotion_code.code %>
-                  </small>
-                </div>
-                <div class="text-success d-flex flex-column text-end">
-                  <span class="text-success"><%= "-#{@current_cart.promotion_code.discount}円" %></span>
-                  <%= link_to '削除', products_cart_promotion_code_path(@current_cart.id), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
-                </div>
-              </li>
-            <% end %>
             <!--画像用モーダル-->
             <div class="modal fade" id="productImageModal-<%= product.id %>" tabindex="-1" aria-labelledby="productImageModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -81,6 +67,20 @@
                 </div>
               </div>
             </div>
+          <% end %>
+          <% if @current_cart.promotion_code.present? %>
+            <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+              <div class="text-success">
+                <h6 class="my-0">プロモーションコード</h6>
+                <small>
+                  <%= @current_cart.promotion_code.code %>
+                </small>
+              </div>
+              <div class="text-success d-flex flex-column text-end">
+                <span class="text-success"><%= "-#{@current_cart.promotion_code.discount}円" %></span>
+                <%= link_to '削除', products_cart_promotion_code_path(@current_cart.id), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
+              </div>
+            </li>
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (JPY)</span>
