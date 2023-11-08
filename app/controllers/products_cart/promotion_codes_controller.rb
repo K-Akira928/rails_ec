@@ -1,12 +1,11 @@
 class ProductsCart::PromotionCodesController < ApplicationController
   def update
-    if search_promotion_code.present?
+    if search_promotion_code.present? && @current_cart.cart_products.present?
       @current_cart.update(promotion_code_id: search_promotion_code.id)
-      redirect_to request.referer
     else
       @product_per_groups = @current_cart.product_per_groups
-      render 'products_cart/carts/index' and return
     end
+    redirect_to request.referer
   end
 
   def destroy
@@ -17,6 +16,6 @@ class ProductsCart::PromotionCodesController < ApplicationController
   private
 
   def search_promotion_code
-    PromotionCode.find_by(code: params[:code])
+    PromotionCode.find_by(code: params[:code], discarded_at: nil)
   end
 end
