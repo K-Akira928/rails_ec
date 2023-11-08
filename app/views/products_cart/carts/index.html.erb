@@ -84,11 +84,7 @@
           <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (JPY)</span>
-            <% if @current_cart.promotion_code.present? %>
-              <strong><%= "#{@cart_amount - @promotion_discout}円" %></strong>
-            <% else %>
-              <strong><%= "#{@cart_amount}円" %></strong>
-            <% end %>
+            <strong><%= "#{@cart_amount}円" %></strong>
           </li>
         </ul>
         <%= form_tag products_cart_promotion_code_path(@current_cart.id), method: :patch do %>

@@ -2,7 +2,9 @@
 
 module Checkout
   class PurchaseHistoriesController < ApplicationController
+    include CartsConcern
     before_action :set_buyer_info
+
     def create
       if @buyer_info.valid? && @current_cart.cart_products.present?
         success_purchase_processed(@buyer_info)
@@ -49,7 +51,7 @@ module Checkout
     end
 
     def failed_purchase_processed
-      @product_per_groups = @current_cart.product_per_groups
+      cart_products_render_info
       flash.now[:alert] = @buyer_info.errors.full_messages
       render 'products_cart/carts/index', status: :unprocessable_entity and return
     end
