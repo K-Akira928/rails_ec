@@ -59,7 +59,7 @@ module Checkout
         buyer_info.save!
         @purchase_history = buyer_info.purchase_histories.create!(promotion_code_id: @current_cart.promotion_code_id)
         @purchase_history.create_buy_products_use_cart_info(@current_cart, @purchase_history)
-        @current_cart.promotion_code.discard
+        @current_cart.promotion_code.discard if @current_cart.promotion_code.present?
       end
 
       PurchaseHistoryMailer.history_mail(@purchase_history, buyer_info.email).deliver_later

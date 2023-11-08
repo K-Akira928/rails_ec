@@ -1,6 +1,7 @@
 class PromotionCode < ApplicationRecord
   include Discard::Model
   has_one :cart, dependent: :destroy
+  has_one :purchase_history, dependent: :destroy 
 
   VALID_CODE_REGEX = /\A^[0-9a-zA-Z]*$\z/i
   validates :code, presence: true, length: { is: 7 }, format: { with: VALID_CODE_REGEX }

@@ -8,6 +8,7 @@
     <h2>ご注文内容</h2>
     <p><%= "明細ID:#{@purchase_history.id}" %></p>
     <hr size="5" noshade="">
+    <p>◆注文商品◆</p>
     <% @buy_products.each do |product| %>
       <p><%= "商品名:#{product.product.name}" %></p>
       <p><%= "価格 #{product.product.price}(円) x #{product.num_of_pieces}(個) = #{product.product.price * product.num_of_pieces}(円)" %></p>
@@ -19,7 +20,19 @@
     <p><%= "郵便番号:#{@buyer_info.post_code}" %></p>
     <p><%= "ご住所:#{[@buyer_info.country, @buyer_info.prefecture, @buyer_info.address_first, @buyer_info.address_second].join(' ')}" %></p>
     <hr>
-    <p>ご請求内容</p>
-    <p><%= "合計金額:#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円" %></p>
+    <% if @purchase_history.promotion_code.present? %>
+      <p>◆プロモーションコード◆</p>
+      <div>
+        <p><%= "コード:#{@purchase_history.promotion_code.code}" %></p>
+        <p><%= "値引:-#{@purchase_history.promotion_code.discount}円" %></p>
+      </div>
+      <hr>
+    <% end %>
+    <p>◆ご請求内容◆</p>
+    <% if @purchase_history.promotion_code.present? %>
+      <p><%= "合計金額:#{@buy_products.sum { |product| product.product.price * product.num_of_pieces } - @purchase_history.promotion_code.discount }円" %></p>
+    <% else %>
+      <p><%= "合計金額:#{@buy_products.sum { |product| product.product.price * product.num_of_pieces }}円" %></p>
+    <% end %>
   </body>
 </html>
