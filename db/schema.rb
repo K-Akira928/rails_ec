@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_162953) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_100042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_162953) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "promotion_code_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -84,10 +85,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_162953) do
     t.index ["discarded_at"], name: "index_products_on_discarded_at"
   end
 
+  create_table "promotion_codes", force: :cascade do |t|
+    t.string "code", null: false
+    t.integer "discount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_promotion_codes_on_discarded_at"
+  end
+
   create_table "purchase_histories", force: :cascade do |t|
     t.integer "buyer_info_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "promotion_code_id"
   end
 
   create_table "purchase_history_products", force: :cascade do |t|

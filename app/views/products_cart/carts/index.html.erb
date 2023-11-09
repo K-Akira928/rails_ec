@@ -68,17 +68,31 @@
               </div>
             </div>
           <% end %>
+          <% if @current_cart.promotion_code.present? %>
+            <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+              <div class="text-success">
+                <h6 class="my-0">プロモーションコード</h6>
+                <small>
+                  <%= @current_cart.promotion_code.code %>
+                </small>
+              </div>
+              <div class="text-success d-flex flex-column text-end">
+                <span class="text-success"><%= "-#{@current_cart.promotion_code.discount}円" %></span>
+                <%= link_to '削除', products_cart_promotion_code_path(@current_cart.id), data: { turbo_method: :delete }, class: 'btn btn-link btn-sm' %>
+              </div>
+            </li>
+          <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (JPY)</span>
             <strong><%= "#{@cart_amount}円" %></strong>
           </li>
         </ul>
-        <form class="card p-2">
+        <%= form_tag products_cart_promotion_code_path(@current_cart.id), method: :patch do %>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
-            <button type="submit" class="btn btn-secondary">Redeem</button>
+            <%= text_field_tag :code, '', { maxlength: 7, placeholder: 'Promo Code', class: 'form-control' } %>
+            <%= submit_tag 'Redeem', class: 'btn btn-secondary' %>
           </div>
-        </form>
+        <% end %>
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">請求先住所</h4>

@@ -50,11 +50,24 @@
           </div>
         </div>
       <% end %>
+      <% if @purchase_history.promotion_code.present? %>
+        <div>
+          <h5>クーポンコード</h5>
+          <div class="text-success d-flex justify-content-between">
+            <span><%= @purchase_history.promotion_code.code %></span>
+            <span><%= "-#{@purchase_history.promotion_code.discount}円" %></span>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <hr>
   <div style="text-align: center; margin-bottom: 25px">
     <h2>小計</h2>
-    <h5><%= "<#{@purchase_history.purchase_history_products.sum { |product| product.product.price * product.num_of_pieces }}円>" %></h5>
+    <% if @purchase_history.promotion_code.present? %>
+      <h5><%= "#{@purchase_history.purchase_history_products.sum { |product| product.product.price * product.num_of_pieces } - @purchase_history.promotion_code.discount}円" %></h5>
+    <% else %>
+      <h5><%= "#{@purchase_history.purchase_history_products.sum { |product| product.product.price * product.num_of_pieces }}円" %></h5>
+    <% end %>
   </div>
 </div>
